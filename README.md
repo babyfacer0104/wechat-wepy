@@ -33,4 +33,5 @@
 > 5.   watch监听改变值
 
 ##界面
-<image src="/src/images/defaultPage.png"></image>
+
+   <image src="/src/images/defaultPage.png"></image>
