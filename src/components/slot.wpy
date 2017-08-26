@@ -1,0 +1,23 @@
+<style lang="less">
+
+</style>
+<template>
+    <view class="panel">
+        <slot name="title">嵌套Slot标题</slot>
+        <slot>
+            嵌套Slot内容
+        </slot>
+    </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class Slot extends wepy.component {
+    data = {}
+    props = {}
+    methods = {}
+    events = {}
+    onLoad() {}
+}
+</script>
+

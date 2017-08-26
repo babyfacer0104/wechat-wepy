@@ -1,0 +1,78 @@
+<style lang="less">
+  .button {
+    width: 92%;
+    position: relative;
+    border-radius: 10rpx;
+    color: #ffffff;
+    background-color: #d84124;
+    text-align: center;
+    margin: 22rpx 30rpx 22rpx 30rpx;
+  }
+
+  button[disabled][type="default"], wx-button[disabled]:not([type]) {
+      position: relative;
+      color: #ffffff;
+      text-align: center;
+      background-color: #bd3c23;
+      border-radius: 10rpx;
+      opacity: 0.6; 
+      filter:alpha(opacity=60);
+  }
+
+  .button-hover{
+      position: relative;
+      color: #ffffff;
+      text-align: center;
+      background-color: #bd3c23;
+      border-radius: 10rpx;
+      opacity: 0.6; 
+      filter: alpha(opacity=60);
+  }
+
+</style>
+<template>
+    <button class="button" hover-class="button-hover" disabled="{{disabled}}" @tap="childFn">
+        <view class="lb-text" title="buttonName">{{buttonName}}</view>
+    </button>
+
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Button extends wepy.component {
+    config = {
+      navigationBarTitleText: 'button'
+    }
+    data = {
+      disabled: false,
+      buttonName: 'za-button'
+    }
+    props = {
+      title: String
+    }
+    methods = {
+      childFn () {
+        var me = this;
+        me.disabled = true;
+        me.$emit('childFn', 100000000);
+      }
+    }
+    events = {
+      //子组
+      'default-broadcast': (...args) => {
+          var me = this;
+          console.log('default-broadcast');
+
+          //在函数运行周期之外的函数里去修改数据需要手动调用$apply方法
+          setTimeout(() => {
+            me.disabled = false;
+            me.$apply();
+          }, 1000);
+      }
+    }
+    onLoad() {
+      this.buttonName = this.$parent.buttonName;
+    }
+  }
+
+</script>
