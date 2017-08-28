@@ -51,6 +51,13 @@
     }
   }
 
+  .repeat-container{
+    button{
+      width: 300rpx;
+      margin: 20rpx;
+    }
+  }
+
 </style>
 <template>
 <view class="container">
@@ -58,8 +65,9 @@
     <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
     <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
   </view>
-  <view class="content">
+  <view class="content repeat-container">
     <view class="content-title">Repeat</view>
+    <button size="10" @tap="clickRefreshRepeat">点击重新渲染</button>
     <repeat for="{{groupList}}" index="index" item="item" key="key">
       <view class="repeat-content">
         <view>{{item.id}},</view>
@@ -76,7 +84,6 @@
   </view>
   <view class="content">
     <!--<view class="content-title">Button</view>-->
-    <!--<button @tap="clickButtonHandle">enter-broadcast</button>-->
     <anotherButton :title="buttonName" :disabled="aBtnDisabled" @childFn.user="parentFn"></anotherButton><!--带参数到公共组件button-->
   </view>
   <view class="content">
@@ -140,17 +147,31 @@
       anotherButton: Button,
       anotherSlot: Slot
     }
-    computed = {
-    }
+    computed = {}
     watch = {
         num (newValue, oldValue) {
             console.log('新值=>'+newValue+'，旧值=>'+oldValue);
         }
     }
     methods = {
-      clickButtonHandle () {
-        var me = this;
-        me.$broadcast('default-broadcast', 1,2,3); 
+      clickRefreshRepeat () {
+        var _this = this;
+        _this.groupList=[{
+            id: 5,
+            name: "AAA",
+            price: "19.90",
+            suitable: "适用于：AAA"
+          }, {
+            id: 6,
+            name: "BBB",
+            price: "100.00",
+            suitable: "适用于：BBB"
+          }, {
+            id: 7,
+            name: "CCC",
+            price: "120.00",
+            suitable: "适用于：CCC"
+        }];
       },
       parentFn (num, evt) {
           var me = this;
@@ -162,7 +183,7 @@
 
           //传到子组件 子组件参数修改
           me.$broadcast('default-broadcast', 1,2,3);
-      }
+      },
     }
     events = {
 
